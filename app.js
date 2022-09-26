@@ -1,13 +1,26 @@
-import Express from "express"
+import express from "express"
 
-const app = Express()
-const port = 3000
-const blog = { id: 1, title: "Blog title", description: "Blog description" }
+const app = express()
+app.set("view engine", "ejs")
 
+//Middleware
+app.use(express.static("public"))
+
+//Routes
 app.get("/", (req, res) => {
-  res.send(blog)
+  res.render("index")
+})
+app.get("/about", (req, res) => {
+  res.render("about")
+})
+app.get("/post", (req, res) => {
+  res.render("post")
+})
+app.get("/add-post", (req, res) => {
+  res.render("add_post")
 })
 
+const port = 3000
 app.listen(port, () => {
   console.log(`Server running on port ${port}`)
 })
