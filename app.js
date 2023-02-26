@@ -17,6 +17,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 //Routes
+//Get
 app.get('/', async (req, res) => {
   const posts = await Post.find({});
   res.render('index', { posts });
@@ -24,13 +25,16 @@ app.get('/', async (req, res) => {
 app.get('/about', (req, res) => {
   res.render('about');
 });
-app.get('/post', (req, res) => {
-  res.render('post');
+app.get('/post/:id', async (req, res) => {
+  const post = await Post.findById(req.params.id);
+  res.render('post', {
+    post,
+  });
 });
 app.get('/add-post', (req, res) => {
   res.render('add_post');
 });
-
+//Post
 app.post('/take-post', async (req, res) => {
   await Post.create(req.body);
   res.redirect('/');
